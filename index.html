@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitaKitar - Recycling Center Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div id="auth-container" class="container center-screen">
+        <div id="login-form" class="glass-card auth-card fade-in">
+            <div class="brand-header">
+                <i class="fa-solid fa-leaf brand-icon"></i>
+                <h1>KitaKitar</h1>
+                <p>Recycling Center Hub</p>
+            </div>
+            <form id="loginForm">
+                <div class="input-group">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="loginUsername" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                </div>
+                <div class="forgot-pass">
+                    <a href="#" id="forgotPassLink">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary">Log In</button>
+            </form>
+            <p class="auth-switch">New Center? <a href="#" id="show-register">Register here</a></p>
+        </div>
+
+        <div id="register-form" class="glass-card auth-card fade-in hidden">
+            <div class="brand-header">
+                <i class="fa-solid fa-leaf brand-icon"></i>
+                <h1>Join KitaKitar</h1>
+                <p>Register your Center</p>
+            </div>
+            <form id="registerForm">
+                <div class="input-group">
+                    <i class="fa-solid fa-building"></i>
+                    <input type="text" id="regCenterName" placeholder="Recycling Center Name" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <input type="text" id="regAddress" placeholder="Center Address" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="regEmail" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="regPassword" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Account</button>
+            </form>
+            <p class="auth-switch">Already registered? <a href="#" id="show-login">Log In</a></p>
+        </div>
+    </div>
+
+    <div id="app-container" class="container hidden">
+        <aside class="sidebar glass-panel">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-leaf"></i>
+                <span>KitaKitar</span>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-view="dashboard">
+                    <i class="fa-solid fa-chart-pie"></i> Dashboard
+                </button>
+                <button class="nav-btn" data-view="history">
+                    <i class="fa-solid fa-clock-rotate-left"></i> History
+                </button>
+                <button class="nav-btn" data-view="leaderboard">
+                    <i class="fa-solid fa-trophy"></i> Leaderboard
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="center-info">
+                    <p id="navCenterName" class="center-name">Loading...</p>
+                    <p id="navCenterAddress" class="center-address">Loading...</p>
+                </div>
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <section id="view-dashboard" class="view-section fade-in">
+                <header class="view-header">
+                    <h2>Dashboard</h2>
+                    <p class="date-display" id="currentDate">Today</p>
+                </header>
+
+                <div class="dashboard-grid">
+                    <div class="glass-card full-width">
+                        <h3><i class="fa-solid fa-calculator"></i> Calculate Rewards</h3>
+                        <form id="calcForm" class="calc-form">
+                            <div id="itemsContainer">
+                                <div class="item-row">
+                                    <div class="input-group">
+                                        <label>Material Type</label>
+                                        <div class="select-wrapper">
+                                            <select class="material-select" required>
+                                                <option value="plastic">Plastic (0.07 pts/kg)</option>
+                                                <option value="metal">Metal (0.09 pts/kg)</option>
+                                                <option value="paper">Paper/Cardboard (0.07 pts/kg)</option>
+                                                <option value="glass">Glass (0.25 pts/kg)</option>
+                                                <option value="aluminum">Aluminum (0.1 pts/kg)</option>
+                                                <option value="lawnwaste">Lawn/Yard Waste (0.15pts/kg)</option>
+                                                <option value="foodwaste">Food Waste (0.4pts/kg)</option>
+                                                <option value="electronicwaste">Electronics Waste (0.5pts/kg)</option>
+                                                <option value="usedtires">Used Tires (0.6pts/kg)</option>\
+                                                <option value="usedoil">Used Oil (1pts/kg)</option>
+                                                <option value="carbatteries">Batteries(Car) (0.8pts/kg)</option>
+                                                <option value="householdbatteries">Batteries(Household) (1.2pts/kg)</option>
+                                                <option value="householdhazardouswaste">Household Hazardous Waste (1.5pts/kg)</option>
+                                            </select>
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <label>Weight (kg)</label>
+                                        <input type="number" class="weight-input" min="0.1" step="0.1" placeholder="0.0"
+                                            required>
+                                    </div>
+                                    <button type="button" class="btn-remove hidden"><i
+                                            class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+
+                            <button type="button" id="addItemBtn" class="btn btn-outline">+ Add Another Item</button>
+                            <button type="submit" class="btn btn-secondary" style="margin-top: 10px;">Calculate
+                                Points</button>
+                        </form>
+                    </div>
+
+                    <div id="resultCard" class="glass-card result-panel hidden">
+                        <div class="points-display">
+                            <span class="label">Total Points</span>
+                            <span class="value" id="calcPoints">0</span>
+                        </div>
+                        <div class="qr-area tooltip" title="Click to enlarge">
+                            <div id="qrcode" class="clickable-qr"></div>
+                            <p>Scan to collect points</p>
+                            <span class="tooltip-text">Click to enlarge</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="view-history" class="view-section hidden">
+                <header class="view-header">
+                    <h2>Transaction History</h2>
+                </header>
+                <div class="glass-card table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Item Type</th>
+                                <th>Weight (kg)</th>
+                                <th>Points</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                        </tbody>
+                        <tfoot>
+                            <tr class="total-row">
+                                <td colspan="2">Total</td>
+                                <td id="historyTotalWeight">0 kg</td>
+                                <td id="historyTotalPoints">+0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </section>
+
+            <section id="view-leaderboard" class="view-section hidden">
+                <header class="view-header">
+                    <h2>Top Recycling Centers</h2>
+                </header>
+                <div class="glass-card table-container">
+                    <table class="data-table leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Center Name</th>
+                                <th>Total Points</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="qrModal" class="modal hidden">
+        <div class="modal-content glass-card">
+            <span id="closeModal" class="close-btn">&times;</span>
+            <h2>Scan QR Code</h2>
+            <div id="qrcodeLarge"></div>
+            <p class="points-large" id="modalPoints">0 Points</p>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
