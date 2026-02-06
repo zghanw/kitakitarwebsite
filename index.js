@@ -9,7 +9,7 @@ const RATES = {
     misc: 0.35,
     foodwaste: 0.4,
     electronicwaste: 0.5,
-    usedtires:0.6,
+    usedtires: 0.6,
     usedoil: 1,
     carbatteries: 0.8,
     householdbatteries: 1.2,
@@ -28,12 +28,14 @@ const appContainer = document.getElementById('app-container');
 // Forms & Inputs
 const loginForm = document.getElementById('loginForm');
 const registerForm = document.getElementById('registerForm');
+const forgotPasswordForm = document.getElementById('forgotPasswordForm');
 const calcForm = document.getElementById('calcForm');
 const itemsContainer = document.getElementById('itemsContainer'); // New container
 
 // Navigation
 const loginView = document.getElementById('login-form');
 const registerView = document.getElementById('register-form');
+const forgotPasswordView = document.getElementById('forgot-password-form');
 const navBtns = document.querySelectorAll('.nav-btn');
 const views = document.querySelectorAll('.view-section');
 
@@ -74,9 +76,44 @@ function setupEventListeners() {
     });
 
     // Forgot Password
+    // Forgot Password
     document.getElementById('forgotPassLink').addEventListener('click', (e) => {
         e.preventDefault();
-        alert('Please contact the System Administrator to reset your password.');
+        loginView.classList.add('hidden');
+        forgotPasswordView.classList.remove('hidden');
+    });
+
+    document.getElementById('back-to-login').addEventListener('click', (e) => {
+        e.preventDefault();
+        forgotPasswordView.classList.add('hidden');
+        loginView.classList.remove('hidden');
+    });
+
+    // Forgot Password Submit
+    forgotPasswordForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('forgotEmail').value;
+
+        // Simulation of checking email
+        const users = JSON.parse(localStorage.getItem('kitakitar_users') || '[]');
+        const userExists = users.some(u => u.email === email);
+
+        if (userExists) {
+            alert(`Password reset link has been sent to ${email}.`);
+            forgotPasswordView.classList.add('hidden');
+            loginView.classList.remove('hidden');
+        } else {
+            // Security best practice: Don't reveal if user exists or not, but for this MVP/demo we can be specific or vague. 
+            // Requirement says "email service will settle the rest", implying we just send it.
+            // But for better UX let's just say sent.
+            // However, to be helpful in this specific context (if it's a dev implementation), let's check existence. 
+            // If we want to strictly follow "email service will settle the rest", we might just show success regardless.
+            // Let's stick to the behavior similar to login: check if user exists.
+            // Actually, usually you just say "If an account exists, an email has been sent."
+            alert(`If an account exists for ${email}, a password reset link has been sent.`);
+            forgotPasswordView.classList.add('hidden');
+            loginView.classList.remove('hidden');
+        }
     });
 
     // Login Logic
